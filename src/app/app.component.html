@@ -1,0 +1,191 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div class="container">
+  <h2>Angular 8 Reactive Form with Validation</h2>
+  <form [formGroup]="myForm" (ngSubmit)="submitForm()" novalidate>
+
+
+
+
+
+    <div class="form-row">
+      <div class="form-group col">
+        <label class="center-block">Title</label>
+        <select formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && myForm.controls['title'].errors }">
+          <option value=""></option>
+          <option value="Mr">Mr</option>
+          <option value="Mrs">Mrs</option>
+          <option value="Miss">Miss</option>
+          <option value="Ms">Ms</option>
+        </select>
+
+        <div
+          *ngIf="myForm.controls['title']?.invalid && (myForm.controls['title']?.dirty || myForm.controls['title']?.touched)"
+          class="alert alert-danger">
+
+          <div *ngIf="myForm.controls['title']?.errors.required">
+            Title is required.
+          </div>
+        </div>
+
+        <!-- if you want to controle errors when submitting-->
+        <div *ngIf="submitted && myForm.controls['title']?.errors" class="invalid-feedback">
+          <div *ngIf="myForm.controls['title']?.errors.required">Title is required</div>
+        </div>
+      </div>
+      <div class="form-group col-5">
+        <label class="center-block">First Name</label>
+        <input type="text" formControlName="firstName" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && myForm.controls['firstName'].errors }" />
+
+          <div
+          *ngIf="myForm.controls['firstName'].invalid && (myForm.controls['firstName'].dirty || myForm.controls['firstName'].touched)"
+          class="alert alert-danger">
+
+          <div *ngIf="myForm.controls['firstName'].errors.required">
+            FirstName is required.
+          </div>
+        </div>
+
+
+        <div *ngIf="submitted && myForm.controls['firstName'].errors" class="invalid-feedback">
+          <div *ngIf="myForm.controls['firstName'].errors.required">First Name is required</div>
+        </div>
+      </div>
+      <div class="form-group col-5">
+        <label class="center-block">Last Name</label>
+        <input type="text" formControlName="lastName" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && myForm.controls['lastName'].errors }" />
+
+
+          <div
+          *ngIf="myForm.controls['lastName'].invalid && (myForm.controls['lastName'].dirty || myForm.controls['lastName'].touched)"
+          class="alert alert-danger">
+
+          <div *ngIf="myForm.controls['lastName'].errors.required">
+            LastName is required.
+          </div>
+        </div>
+
+        <div *ngIf="submitted && myForm.controls['lastName'].errors" class="invalid-feedback">
+          <div *ngIf="myForm.controls['lastName'].errors.required">Last Name is required</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="center-block">BirthDay</label>
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd" name="dp" formControlName="birthDate" ngbDatepicker
+          #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+        </div>
+      </div>
+    </div>
+
+    <div
+          *ngIf="myForm.controls['birthDate'].invalid && (myForm.controls['birthDate'].dirty || myForm.controls['birthDate'].touched)"
+          class="alert alert-danger">
+
+          <div *ngIf="myForm.controls['birthDate'].errors.required">
+            BirthDate is required.
+          </div>
+        </div>
+
+    <div class="form-group">
+      <label class="center-block">Email</label>
+      <input type="text" formControlName="email" class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && myForm.controls['email'].errors }" />
+      <div *ngIf="submitted && myForm.controls['email'].errors" class="invalid-feedback">
+        <div *ngIf="myForm.controls['email'].errors.required">Email is required</div>
+        <div *ngIf="myForm.controls['email'].errors.email">Email must be a valid email address</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col">
+        <label class="center-block">Password</label>
+        <input type="password" formControlName="password" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && myForm.controls['password'].errors }" />
+        <div *ngIf="submitted && myForm.controls['password'].errors" class="invalid-feedback">
+          <div *ngIf="myForm.controls['password'].errors.required">Password is required</div>
+          <div *ngIf="myForm.controls['password'].errors.minlength">Password must be at least 7 characters</div>
+        </div>
+      </div>
+      <div class="form-group col">
+        <label class="center-block">Confirm Password</label>
+        <input type="password" formControlName="confirmPassword" class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && myForm.controls['confirmPassword'].errors }" />
+        <div *ngIf="submitted && myForm.controls['confirmPassword'].errors" class="invalid-feedback">
+          <div *ngIf="myForm.controls['confirmPassword'].errors.required">Confirm Password is required</div>
+          <div *ngIf="myForm.controls['confirmPassword'].errors.mustMatch">Passwords must match</div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-row">
+      <div formGroupName="address" class="form-group col">
+        <h6>Address :</h6>
+        <div class="form-group col">
+          <label class="center-block">
+            Street:
+            <input class="form-control" formControlName="street">
+          </label>
+        </div>
+        <div class="form-group col">
+          <label class="center-block">
+            City:
+            <input class="form-control" formControlName="city">
+          </label>
+        </div>
+        <div class="form-group col">
+          <label class="center-block">
+            State:
+            <input class="form-control" formControlName="state">
+          </label>
+        </div>
+        <div class="form-group col">
+          <label class="center-block">
+            Zip Code:
+            <input class="form-control" formControlName="zip">
+          </label>
+        </div>
+      </div>
+
+
+      <div *ngIf="myForm['controls'].address['controls'].zip.errors">
+        <div
+          *ngIf="myForm['controls'].address['controls'].zip.errors.minlength || myForm['controls'].address['controls'].zip.errors.maxlength"
+          class="alert alert-danger">
+          Zip code must be of 4 characters.
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group form-check">
+      <input type="checkbox" formControlName="acceptTerms" id="acceptTerms" class="form-check-input"
+        [ngClass]="{ 'is-invalid': submitted && myForm.controls['acceptTerms'].errors }" />
+      <label for="acceptTerms" class="form-check-label">Accept Terms & Conditions</label>
+      <div *ngIf="submitted && myForm.controls['acceptTerms'].errors" class="invalid-feedback">Accept Ts & Cs is
+        required</div>
+    </div>
+
+
+    <div class="text-center">
+      <button class="btn btn-primary mr-1" [disabled]="myForm.pristine || myForm.invalid">Save</button>
+      <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+    </div>
+
+
+
+
+
+
+
+  </form>
+
+
+
+
+</div>
+<router-outlet></router-outlet>
